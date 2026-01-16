@@ -31,7 +31,7 @@ if ($_POST) {
             $mailer->clearAllRecipients();
             $mailer->addAddress($_POST['email']);
             $mailer->Subject = 'Ваша заявка принята!';
-            $mailer->Body = 'Ваша заявка на консультацию психолога принята. В ближайшее время с я свяжусь с Вами';
+            $mailer->Body = 'Ваша заявка на консультацию психолога принята. В ближайшее время я свяжусь с Вами';
             $mailer->send();
         } else {
             $response = 'Mail setting error';

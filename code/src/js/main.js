@@ -102,18 +102,50 @@ const educationSlider = new Swiper ('.education', {
     autoplay: {
         delay: 1000,
     },
-})
+});
 
 const forms = document.querySelectorAll('form')
+const formModal = document.querySelector('.modal')
+const loader = document.querySelector('.loading-container')
+
+
 
 for (let form of forms) {
     form.addEventListener('submit', function (event) {
         event.preventDefault();
-        const formData = new FormData(form)
 
-       fetch
-    })
+        const formData = new FormData(this);
+
+        loader.style.display = 'block'
+
+        if (formModal.style.display === 'block') {
+            formModal.style.display = 'none'
+        }
+
+        fetch('/php/mail.php', {
+            method: 'POST',
+            body: formData,
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if(data === 'ok') {
+                    const successModal = document.querySelector(".modal-window")
+                    loader.style.display = 'none'
+                    successModal.style.display = 'block'
+                }
+                else {
+                    const errorModal = document.querySelector(".modal-window_error")
+                    loader.style.display = 'none'
+                    errorModal.style.display = 'block'
+                }
+            })
+            .catch((error) => {
+                console.log('Произошла ошибка!')
+                console.error(error)
+            })
+            });
 }
+
 
 
 
